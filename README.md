@@ -69,6 +69,70 @@ For the selected period October 2019:
 
 ![Time Intelligence](04-time-intelligence.png)
 
+## Data Preparation
+
+Power Query was used to prepare the data before analysis.
+
+Key steps included:
+- Importing the Listings and Reviews CSV files
+- Setting appropriate data types
+- Removing unnecessary columns
+- Keeping business-relevant fields
+- Preparing the data model for analysis
+- Creating relationships between Listings, Reviews, and the Date table
+
+## DAX Measures
+
+Key measures created in this project include:
+
+```DAX
+Total Listings =
+DISTINCTCOUNT(Listings[listing_id])
+
+
+Average Price =
+AVERAGE(Listings[price])
+
+
+
+Total Reviews =
+COUNTROWS(Reviews)
+
+Unique Reviewers =
+DISTINCTCOUNT(Reviews[reviewer_id])
+
+Previous Month Reviews =
+CALCULATE(
+    [Total Reviews],
+    DATEADD('Date'[Date], -1, MONTH)
+)
+
+MoM Review Growth % =
+DIVIDE(
+    [Total Reviews] - [Previous Month Reviews],
+    [Previous Month Reviews]
+)
+
+Previous Year Reviews =
+CALCULATE(
+    [Total Reviews],
+    SAMEPERIODLASTYEAR('Date'[Date])
+)
+
+YoY Review Growth % =
+DIVIDE(
+    [Total Reviews] - [Previous Year Reviews],
+    [Previous Year Reviews]
+)
+
+Key Insights
+- Paris has the highest listing volume in the dataset.
+- Cape Town and Bangkok show some of the highest average prices.
+- Guest ratings remain relatively consistent across cities.
+- Property types show much wider differences in price than in guest ratings.
+- Higher average price does not consistently correspond to higher guest ratings.
+- For October 2019, review activity increased 6.60% month over month and 39.06% year over year.
+
 ## Skills Demonstrated
 
 - Power BI
